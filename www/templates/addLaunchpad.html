@@ -1,0 +1,36 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Add Launchpad</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeModal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form ng-submit="addLaunchpad()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Launchpad ID:</span>
+          <input type="number" ng-model="launchpadData.id">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Delay Amount</span>
+          <input type="number" ng-model="launchpadData.delay">
+        </label>
+        <ul class="list">
+          <li class="item item-toggle">
+             Enable
+             <label class="toggle toggle">
+               <input type="checkbox" ng-model="launchpadData.enabled">
+               <div class="track">
+                 <div class="handle"></div>
+               </div>
+             </label>
+          </li>
+        </ul>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Add Launchpad</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>
