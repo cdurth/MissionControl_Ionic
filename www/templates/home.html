@@ -1,8 +1,19 @@
 <ion-view view-title="Mission Control" cache-view="false">
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="launchpad in launchPads" href="#/app/playlists/{{playlist.id}}">
+      <ion-item ng-repeat="launchpad in launchPads" href="#/app/settings">
+      <div class="item-toggle">
         Launchpad: {{launchpad.id}}
+        <span class="delay">
+          - {{launchpad.delay}} ms
+        </span>
+       <label class="toggle toggle">
+         <input type="checkbox" ng-model="launchpad.enabled" ng-disabled="true">
+         <div class="track">
+           <div class="handle"></div>
+         </div>
+       </label>
+       </div>
       </ion-item>
     </ion-list>
   </ion-content>

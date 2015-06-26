@@ -87,4 +87,19 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       return JSON.parse($window.localStorage[key] || '{}');
     }
   }
-}]);
+}])
+
+.service('refreshService', function sharedProperties () {
+
+    this.flag = false;
+
+        this.getProperty= function () {
+            return this.flag;
+        },
+        this.setProperty= function(value) {
+
+            this.flag = value;
+                    
+    };
+    console.log(this.flag)
+});

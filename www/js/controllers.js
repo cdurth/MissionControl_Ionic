@@ -11,7 +11,7 @@ angular.module('starter.controllers', [])
   
   // Form data for the login modal
   $scope.launchPads = $localstorage.get('launchPads');
-  if(typeof($scope.launchPads) === 'undefined'){
+  if(typeof($scope.launchPads) === 'undefined' || $scope.launchPads === ''){
     $scope.launchPads = [];
   } else {
     $scope.launchPads = JSON.parse($scope.launchPads);
@@ -21,10 +21,6 @@ angular.module('starter.controllers', [])
   $scope.updateLocalStorage = function(){
     $localstorage.set('launchPads', JSON.stringify($scope.launchPads));
   };
-  
-  $scope.refresh = function(){
-    $scope.$apply();
-  }
   
   // *******************************
   // ********* MODAL STUFF *********
@@ -57,23 +53,25 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('HomeCtrl', function($scope,$state) {
-  $scope.reloadLaunchpads = false  
+.controller('HomeCtrl', function($scope,$state,$stateParams,refreshService,$window) {
   $scope.$on('$ionicView.loaded', function(e) {
-    console.log($scope.refresh);
-    $scope.refresh();
-    
+    $scope.flag = refreshService.getProperty();
+    if($scope.flag){
+      console.log('inside');
+      $scope.flag = refreshService.setProperty(false);
+      $window.location.reload(true);
+    }
   });
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('PlaylistCtrl', function($scope, $stateParams,refreshService) {
    $state.go('app.home', {cache: false}) 
 })
 
-.controller('addLaunchpadCtrl', function($scope, $stateParams) {
+.controller('addLaunchpadCtrl', function($scope, $stateParams,refreshService) {
 })
 
-.controller('SettingsCtrl', function ($scope, $state, $stateParams, $localstorage) {
+.controller('SettingsCtrl', function ($scope, $state, $stateParams, $localstorage, refreshService) {
   $scope.settingsData = $localstorage.getObject('launchpadSettings');
   if(typeof($scope.settingsData) === 'undefined'){
     console.log('new');
@@ -88,5 +86,7 @@ angular.module('starter.controllers', [])
   $scope.clearLaunchpads = function() {
     $localstorage.set('launchPads', '');
     $scope.launchPads = [];
+    $scope.flag = refreshService.setProperty(true);
+    console.log(refreshService.getProperty());
   };
 });
